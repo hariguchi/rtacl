@@ -1,0 +1,101 @@
+CPU:    Intel(R) Core(TM) i3-4160T CPU @ 3.10GHz (cache size: 3072 KB)
+Memory: 4GB
+
+size: 1000000, i: 1000000
+insert:  1000000 calls, 3267999.68 us, 3.27 us/call, min: 120 ns, max: 99.444 us
+insert:      0ns - 1000ns:  0.56%  5609
+insert:      1us -  2us:   73.88%  738780
+insert:      2us -  3us:   13.71%  137123
+insert:      3us -  4us:    0.07%  660
+insert:      4us -  5us:    0.00%  28
+insert:      5us -  6us:    0.01%  132
+insert:      6us -  7us:    0.00%  12
+insert:      7us -  8us:    0.00%  4
+insert:      8us -  9us:    0.00%  3
+insert:      9us - 10us:    0.00%  1
+insert:     10us -  20us:   9.79%  97938
+insert:     20us -  30us:   1.75%  17458
+insert:     30us -  40us:   0.17%  1666
+insert:     40us -  50us:   0.05%  488
+insert:     50us -  60us:   0.01%  79
+insert:     60us -  70us:   0.00%  13
+insert:     70us -  80us:   0.00%  0
+insert:     80us -  90us:   0.00%  5
+insert:     90us - 100us:   0.00%  1
+insert:    100us - 1000us:  0.00%  0
+insert:           >1ms:      ---   0
+
+Random match test:
+match:  1000000 calls, 833676.50 us, 0.83 us/call, min: 226 ns, max: 19.099 us
+match:      0ns -  100ns:  0.00%  0
+match:    100ns -  200ns:  0.00%  0
+match:    200ns -  300ns:  0.01%  114
+match:    300ns -  400ns:  0.06%  564
+match:    400ns -  500ns:  0.31%  3083
+match:    500ns -  600ns:  2.42%  24228
+match:    600ns -  700ns: 13.29%  132941
+match:    700ns -  800ns: 31.47%  314720
+match:    800ns -  900ns: 26.34%  263397
+match:    900ns - 1000ns: 11.40%  114001
+match:      1us -  2us:   14.67%  146728
+match:      2us -  3us:    0.00%  16
+match:      3us -  4us:    0.00%  0
+match:      4us -  5us:    0.00%  0
+match:      5us -  6us:    0.00%  2
+match:      6us -  7us:    0.00%  30
+match:      7us -  8us:    0.01%  92
+match:      8us -  9us:    0.00%  6
+match:      9us - 10us:    0.00%  5
+match:     10us - 100us:   0.01%  73
+match:    100us - 1000us:  0.00%  0
+match:           >1ms:      ---   0
+
+Random unmatch test:
+unmatch:  1000000 calls, 781250.86 us, 0.78 us/call, min: 166 ns, max: 41.015 us
+unmatch:      0ns -  100ns:  0.00%  0
+unmatch:    100ns -  200ns:  0.00%  17
+unmatch:    200ns -  300ns:  0.02%  175
+unmatch:    300ns -  400ns:  0.07%  750
+unmatch:    400ns -  500ns:  0.58%  5764
+unmatch:    500ns -  600ns:  5.38%  53756
+unmatch:    600ns -  700ns: 22.96%  229649
+unmatch:    700ns -  800ns: 35.30%  352967
+unmatch:    800ns -  900ns: 18.41%  184081
+unmatch:    900ns - 1000ns:  7.81%  78098
+unmatch:      1us -  2us:    9.45%  94543
+unmatch:      2us -  3us:    0.00%  0
+unmatch:      3us -  4us:    0.00%  0
+unmatch:      4us -  5us:    0.00%  0
+unmatch:      5us -  6us:    0.00%  3
+unmatch:      6us -  7us:    0.01%  52
+unmatch:      7us -  8us:    0.01%  67
+unmatch:      8us -  9us:    0.00%  3
+unmatch:      9us - 10us:    0.00%  5
+unmatch:     10us - 100us:   0.01%  70
+unmatch:    100us - 1000us:  0.00%  0
+unmatch:           >1ms:      ---   0
+
+remove:  1000000 calls, 1249830.84 us, 1.25 us/call, min: 44 ns, max: 191.102 us
+remove:      0ns -  100ns:  0.00%  16
+remove:    100ns -  200ns:  0.01%  70
+remove:    200ns -  300ns:  0.04%  419
+remove:    300ns -  400ns:  0.32%  3217
+remove:    400ns -  500ns:  1.96%  19640
+remove:    500ns -  600ns:  8.18%  81849
+remove:    600ns -  700ns: 21.03%  210252
+remove:    700ns -  800ns: 28.17%  281707
+remove:    800ns -  900ns: 18.47%  184740
+remove:    900ns - 1000ns:  6.81%  68074
+remove:      1us -  2us:    3.23%  32350
+remove:      2us -  3us:    0.23%  2292
+remove:      3us -  4us:    2.04%  20387
+remove:      4us -  5us:    6.67%  66653
+remove:      5us -  6us:    0.96%  9646
+remove:      6us -  7us:    0.25%  2462
+remove:      7us -  8us:    0.65%  6536
+remove:      8us -  9us:    0.64%  6401
+remove:      9us - 10us:    0.14%  1409
+remove:     10us - 100us:   0.19%  1879
+remove:    100us - 1000us:  0.00%  1
+remove:           >1ms:      ---   0
+
