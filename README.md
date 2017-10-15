@@ -8,6 +8,13 @@ ranges as well as TCP/UDP port range, IP protocol range, and
 DSCP range although IP protocol and DSCP may not need range
 matching.
 
+## Requirements
+
+**rtacl::db** uses **boost::geometry::index::rtree**. It is
+necessary to install [boost C++ libraries](http://www.boost.org/).
+Version 1.63 (or newer) is preferable.
+
+
 ## Data Structures
 
 * **rtacl::ipv4a**: IPv4 address to be used inside
