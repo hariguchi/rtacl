@@ -1,7 +1,7 @@
 #include <random>
 
 #include "rtacl.hpp"
-#include "perfMon.hpp"
+#include "cbProf.hpp"
 
 using bfmt = boost::format;
 
@@ -45,7 +45,7 @@ showSockItem (rtacl::sockItem<SADDR>& i)
 int
 main (int argc, char *argv[])
 {
-    perfMon::prof prof[4];
+    cbProf::prof prof[4];
     size_t i;
     prof[0].setBanner("insert: ");
     prof[1].setBanner("match: ");

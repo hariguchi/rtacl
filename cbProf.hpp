@@ -1,5 +1,5 @@
-#ifndef __PERFMON_HPP__
-#define __PERFMON_HPP__
+#ifndef __CBPROF_HPP__
+#define __CBPROF_HPP__
 
 /*
  * Copyright (c) 2017 Yoichi Hariguchi
@@ -32,7 +32,7 @@
 #include "local_types.h"
 
 
-namespace perfMon {
+namespace cbProf {
 
 using bfmt = boost::format;
 using nsec = std::chrono::nanoseconds;
@@ -43,21 +43,19 @@ using timePoint = std::chrono::time_point<hrclock>;
 
 /**
  *  @name  prof
- *  @brief Class to measure performance of
- *         a function or a code block
+ *  @brief Measures the performance of a code block
  *
  *   Example
  *
- *     perfMon::prof prof("Example: ");
+ *   cbProf::prof prof("Example: ", true);
  *
- *     prof.run();
- *     for ( i = 0; i < 1000; ++i ) {
- *         prof.begin();
- *         functionToBeProfiled();
- *         prof.end();
- *     }
- *     prof.makeHist();
- *     std::cout << prof.str() << "\n";
+ *   for ( i = 0; i < 1000; ++i ) {
+ *       prof.begin();
+ *       functionToBeProfiled();
+ *       prof.end();
+ *   }
+ *   prof.makeHist();
+ *   printf("%s\n", prof.getCstr());
  */
 class prof {
 private:
@@ -124,7 +122,7 @@ prof::init ()
 /**
  * @name  prof::begin
  * @brief Public function
- *        Starts the stopwatch.
+ *        Starts the stopwatch
  */
 inline void
 prof::begin ()
@@ -138,7 +136,7 @@ prof::begin ()
 /**
  * @name  prof::end
  * @brief Public function
- *        Stops the stopwatch, then updates performance statistics.
+ *        Stops the stopwatch, then updates the duration statistics
  */
 inline void
 prof::end ()
@@ -230,7 +228,7 @@ prof::makeHistEnt (int begin, int end, int tm, int d,
 /**
  * @name  prof::makeHist
  * @brief Public function
- *        Makes a histogram.
+ *        Makes a histogram
  */
 inline void
 prof::makeHist ()
@@ -276,6 +274,6 @@ prof::makeHist ()
             % hist[37]).str();
 }
 
-} // namespace tinyProf
+} // namespace cbProf
 
-#endif//__PERFMON_HPP__
+#endif//__CBPROF_HPP__
