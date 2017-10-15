@@ -55,7 +55,7 @@ using timePoint = std::chrono::time_point<hrclock>;
  *       prof.end();
  *   }
  *   prof.makeHist();
- *   printf("%s\n", prof.getCstr());
+ *   std.cout << prof.str() << "\n";
  */
 class prof {
 private:

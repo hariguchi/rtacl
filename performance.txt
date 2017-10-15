@@ -1,5 +1,9 @@
-CPU:    Intel(R) Core(TM) i3-4160T CPU @ 3.10GHz (cache size: 3072 KB)
-Memory: 4GB
+CPU:              Intel(R) Core(TM) i3-4160T CPU @ 3.10GHz
+                  (cache size: 3072 KB)
+Memory:           4GB
+OS:               Linux 3.13.0-116-generic #163-Ubuntu SMP x86_64
+Compiler Options: OPTFLAGS=-O3 DEFS=-DNDEBUG
+
 
 size: 1000000, i: 1000000
 insert:  1000000 calls, 3267999.68 us, 3.27 us/call, min: 120 ns, max: 99.444 us
