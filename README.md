@@ -12,9 +12,11 @@ matching.
 
 ## Requirements
 
-**rtacl::db** uses **boost::geometry::index::rtree**. It is
-necessary to install [boost C++ libraries](http://www.boost.org/).
-Version 1.63 (or newer) is preferable.
+* **rtacl::db** uses **boost::geometry::index::rtree**. It is
+  necessary to install [boost C++ libraries](http://www.boost.org/).
+  Version 1.63 (or newer) is preferable.
+* *local_types.h* must be stored in the include path as well as
+  *rtacl.hpp*
 
 ## Performance
 
