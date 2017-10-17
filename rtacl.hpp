@@ -355,7 +355,7 @@ ipv4a2s (const rtacl::ipv4a a)
     }
     val = (a & mask);
     s += (boost::format("%d") % val).str();
-    return std::move(s);
+    return s;
 }
 
 /**
@@ -382,7 +382,7 @@ ipv6a2s (const rtacl::ipv6a& a)
     }
     inet_ntop(AF_INET6, &sa.sin6_addr, buf, sizeof(buf));
     std::string s(buf);
-    return std::move(s);
+    return s;
 }
 
 /**
@@ -407,7 +407,7 @@ sin6a2int (const sockaddr_in6& sin6)
         addr <<= 8;
     }
     addr |= sin6.sin6_addr.s6_addr[i];
-    return std::move(addr);
+    return addr;
 }
 
 /**
@@ -432,7 +432,7 @@ int2sin6 (const INT& addr)
         u8 n = static_cast<u8>(addr >> (i << 3));
         sin6.sin6_addr.s6_addr[max - i] = n;
     }
-    return std::move(sin6);
+    return sin6;
 }
 
 /**
@@ -446,14 +446,13 @@ int2sin6 (const INT& addr)
 inline std::string
 tuple2str (const rtacl::tuple<ipv4a>& t)
 {
-    return std::move(
-        (boost::format("%s, %s, %d, %d, %d, %d")
-         % rtacl::ipv4a2s(t.get<0>())
-         % rtacl::ipv4a2s(t.get<1>())
-         % static_cast<U32>(t.get<2>())
-         % static_cast<U32>(t.get<3>())
-         % static_cast<U32>(t.get<4>())
-         % static_cast<U32>(t.get<5>())).str());
+    return (boost::format("%s, %s, %d, %d, %d, %d")
+            % rtacl::ipv4a2s(t.get<0>())
+            % rtacl::ipv4a2s(t.get<1>())
+            % static_cast<U32>(t.get<2>())
+            % static_cast<U32>(t.get<3>())
+            % static_cast<U32>(t.get<4>())
+            % static_cast<U32>(t.get<5>())).str();
 }
 
 /**
@@ -467,14 +466,13 @@ tuple2str (const rtacl::tuple<ipv4a>& t)
 inline std::string
 tuple2str (const rtacl::tuple<ipv6a>& t)
 {
-    return std::move(
-        (boost::format("%s, %s, %d, %d, %d, %d")
-         % rtacl::ipv6a2s(t.get<0>())
-         % rtacl::ipv6a2s(t.get<1>())
-         % static_cast<U32>(t.get<2>())
-         % static_cast<U32>(t.get<3>())
-         % static_cast<U32>(t.get<4>())
-         % static_cast<U32>(t.get<5>())).str());
+    return (boost::format("%s, %s, %d, %d, %d, %d")
+            % rtacl::ipv6a2s(t.get<0>())
+            % rtacl::ipv6a2s(t.get<1>())
+            % static_cast<U32>(t.get<2>())
+            % static_cast<U32>(t.get<3>())
+            % static_cast<U32>(t.get<4>())
+            % static_cast<U32>(t.get<5>())).str();
 }
 
 /**
@@ -488,20 +486,19 @@ tuple2str (const rtacl::tuple<ipv6a>& t)
 inline std::string
 range2str (const rtacl::range<ipv4a>& r)
 {
-    return std::move(
-        (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
-         % rtacl::ipv4a2s(r.min_corner().get<0>() + 1)
-         % rtacl::ipv4a2s(r.max_corner().get<0>() - 1)
-         % rtacl::ipv4a2s(r.min_corner().get<1>() + 1)
-         % rtacl::ipv4a2s(r.max_corner().get<1>() - 1)
-         % static_cast<U32>(r.min_corner().get<2>() + 1)
-         % static_cast<U32>(r.max_corner().get<2>() - 1)
-         % static_cast<U32>(r.min_corner().get<3>() + 1)
-         % static_cast<U32>(r.max_corner().get<3>() - 1)
-         % static_cast<U32>(r.min_corner().get<4>() + 1)
-         % static_cast<U32>(r.max_corner().get<4>() - 1)
-         % static_cast<U32>(r.min_corner().get<5>() + 1)
-         % static_cast<U32>(r.max_corner().get<5>() - 1)).str());
+    return (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
+            % rtacl::ipv4a2s(r.min_corner().get<0>() + 1)
+            % rtacl::ipv4a2s(r.max_corner().get<0>() - 1)
+            % rtacl::ipv4a2s(r.min_corner().get<1>() + 1)
+            % rtacl::ipv4a2s(r.max_corner().get<1>() - 1)
+            % static_cast<U32>(r.min_corner().get<2>() + 1)
+            % static_cast<U32>(r.max_corner().get<2>() - 1)
+            % static_cast<U32>(r.min_corner().get<3>() + 1)
+            % static_cast<U32>(r.max_corner().get<3>() - 1)
+            % static_cast<U32>(r.min_corner().get<4>() + 1)
+            % static_cast<U32>(r.max_corner().get<4>() - 1)
+            % static_cast<U32>(r.min_corner().get<5>() + 1)
+            % static_cast<U32>(r.max_corner().get<5>() - 1)).str();
 }
 
 /**
@@ -515,8 +512,7 @@ range2str (const rtacl::range<ipv4a>& r)
 inline std::string
 range2str (const rtacl::range<ipv6a>& r)
 {
-    return std::move(
-           (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
+    return (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
             % ipv6a2s(r.min_corner().get<0>() + 1)
             % ipv6a2s(r.max_corner().get<0>() - 1)
             % ipv6a2s(r.min_corner().get<1>() + 1)
@@ -528,7 +524,7 @@ range2str (const rtacl::range<ipv6a>& r)
             % static_cast<U32>(r.min_corner().get<4>() + 1)
             % static_cast<U32>(r.max_corner().get<4>() - 1)
             % static_cast<U32>(r.min_corner().get<5>() + 1)
-            % static_cast<U32>(r.max_corner().get<5>() - 1)).str());
+            % static_cast<U32>(r.max_corner().get<5>() - 1)).str();
 }
 
 /*
@@ -576,7 +572,7 @@ db<ADDR>::find (const tuple<ADDR>& key)
     }
     assert(n == r.size());
 
-    return std::move(r);
+    return r;
 }
 
 /**
@@ -718,7 +714,7 @@ db<ADDR>::dump () const
     result<ADDR> r;
     rtree.query(bgi::covered_by(b), std::back_inserter(r));
 
-    return std::move(r);
+    return r;
 }
 
 /**
@@ -768,14 +764,13 @@ sockItem<SADDR>::str ()
     char dst[64];
     inet_ntop(af, getsa(), src, sizeof(src));
     inet_ntop(af, getda(), dst, sizeof(dst));
-    return std::move(
-        (boost::format("%s, %s, %d, %d, %d, %d")
-         % src
-         % dst
-         % (u32)(getsp())
-         % (u32)(getdp())
-         % (u32)(getProto())
-         % (u32)(getDSCP())).str());
+    return (boost::format("%s, %s, %d, %d, %d, %d")
+            % src
+            % dst
+            % (u32)(getsp())
+            % (u32)(getdp())
+            % (u32)(getProto())
+            % (u32)(getDSCP())).str();
 
 }
 
@@ -802,20 +797,19 @@ sockEnt<SADDR>::str ()
     inet_ntop(min.af, min.getda(), daLo, sizeof(daLo));
     inet_ntop(max.af, max.getsa(), saHi, sizeof(saHi));
     inet_ntop(max.af, max.getda(), daHi, sizeof(daHi));
-    return std::move(
-        (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
-         % saLo
-         % saHi
-         % daLo
-         % daHi
-         % (u32)(min.getsp())
-         % (u32)(max.getsp())
-         % (u32)(min.getdp())
-         % (u32)(max.getdp())
-         % (u32)(min.getProto())
-         % (u32)(max.getProto())
-         % (u32)(min.getDSCP())
-         % (u32)(max.getDSCP())).str());
+    return (boost::format("%s-%s, %s-%s, %d-%d, %d-%d, %d-%d, %d-%d")
+            % saLo
+            % saHi
+            % daLo
+            % daHi
+            % (u32)(min.getsp())
+            % (u32)(max.getsp())
+            % (u32)(min.getdp())
+            % (u32)(max.getdp())
+            % (u32)(min.getProto())
+            % (u32)(max.getProto())
+            % (u32)(min.getDSCP())
+            % (u32)(max.getDSCP())).str();
 }
 
 
