@@ -536,3 +536,10 @@ remove:    100us - 1000us:  0.00%  22
 remove:           >1ms:      ---   14
 
 ```
+
+## References
+
+* [Original R-tree paper]
+   (http://www-db.deis.unibo.it/courses/SI-LS/papers/Gut84.pdf)
+* [Overview of R-tree]
+   (http://dblab.usc.edu/csci585/585%20materials/RTrees.ppt)
