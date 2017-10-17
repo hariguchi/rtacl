@@ -167,6 +167,8 @@ prof::end ()
         i = 18 + (delta.count()/10000);
     } else if (delta < nsec(1000*1000)) {
         i = 27 + (delta.count()/100000);
+    } else {
+        i = 37;
     }
     ++hist[i];
 
