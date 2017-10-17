@@ -239,7 +239,7 @@ prof::makeHist ()
     double usecSum = ((double)sum.count())/1000.0;
 
     msg = (bfmt("%s %d calls, %.2f us, "
-                "%.2f us/call, min: %ld ns, max: %ld us\n")
+                "%.2f us/call, min: %" PRId64 "ns, max: %" PRId64 "us\n")
            % banner
            % nCalls
            % usecSum
