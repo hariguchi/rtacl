@@ -119,7 +119,7 @@ enum {
 
 #if __SIZEOF_POINTER__ == 4
 # define getPtr(_type_,_ptr_)      ((_type_*) \
-                                   ((((u32)(_ptr_)) & ((~0) << 2))))
+                                    ((((u32)(_ptr_)) & (((u32)(~0)) << 2))))
 # define getPtrTag(_ptr_)          (((u32)(_ptr_)) & 3)
 # define setPtrTag(_ptr_,_val_)    do {     \
            (*((u32*)(_ptr_))) |= ((_val_) & 3);    \
@@ -129,7 +129,7 @@ enum {
          } while (0)
 #elif __SIZEOF_POINTER__ == 8
 # define getPtr(_type_,_ptr_)      ((_type_*) \
-                                   ((((u64)(_ptr_)) & ((~0) << 2))))
+                                    ((((u64)(_ptr_)) & (((u64)(~0)) << 2))))
 # define getPtrTag(_ptr_)          (((u64)(_ptr_)) & 3)
 # define setPtrTag(_ptr_,_val_)    do {     \
            (*((u64*)(_ptr_))) |= ((_val_) & 3);    \
