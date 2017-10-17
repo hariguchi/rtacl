@@ -36,6 +36,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
+#include <inttypes.h>
 
 #ifdef __cplusplus
 #include <iostream>
