@@ -23,29 +23,30 @@ matching.
 * CPU: Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
 * Memory: 16GB
 * OS: Darwin Kernel Version 16.7.0: root:xnu-3789.70.16~2/RELEASE_X86_64 x86_64
+* Compiler: Apple LLVM version 9.0.0 (clang-900.0.38)
 * Compiler options: -O3 -DNDEBUG
 
 
 ### Search (matching)
 
-7300ns/search with 1 million IPv4 ACL entries.
+730 ns/search with 1 million IPv4 ACL entries.
 
 
 ### Search (un-matching)
 
-610ns/search with 1 million IPv4 ACL entries.
+610 ns/search with 1 million IPv4 ACL entries.
 
 
 ### Insertion
 
 2.49 us/insertion in average while inserting 1 million IPv4 ACL
-entries.
+entries (ascendant.)
 
 
 ### Deletion
 
 850 ns/insertion in average while deleting 1 million IPv4 ACL
-entries.
+entries (ascendant.)
 
 
 ## Data Structures
