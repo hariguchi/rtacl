@@ -166,7 +166,7 @@ public:
         this->dscp  = dscp;
     };
     void setSrcAddr (SADDR& src) { this->src = src; };
-    void setDstAddr (SADDR& src) { this->dst = dst; };
+    void setDstAddr (SADDR& dst) { this->dst = dst; };
     void setProto (u8 proto) { this->proto = proto; };
     void setDSCP (u8 dscp) { this->dscp = dscp; };
     SADDR& getSrc () { return src; };
