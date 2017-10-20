@@ -61,10 +61,13 @@ entries (ascendant.)
 * **rtacl::tuple<ADDR>**: ACL tuple (search key.) Template
   parameter **ADDR** must be either **rtacl::ipv4a** or
   **rtacl::ipv6a**. This is a *typedef* of
-  **boost::geometry::point** (6 dimensional.) **Its order must
-  be source IPv4/IPv6 address, destination IPv4/IPv6 address,
-  source port number, destination port number, IP protocol,
-  and DSCP**.
+  **boost::geometry::point** (6 dimensional.) Its order must be:
+    1. source IPv4/IPv6 address
+    2. destination IPv4/IPv6 address
+    3. source port number
+    4. destination port number
+    5. IP Protocol
+    6. DSCP
 * **rtacl::range<ADDR>**: The ACL range defined by two
   **rtacl::tuple**s (minimum and maximum). Template parameter
   **ADDR** must be either **rtacl::ipv4a** or **rtacl::ipv6a**.
@@ -86,7 +89,7 @@ entries (ascendant.)
 * **rtacl::result<ADDR>**: R-tree ACL search result. Template
   parameter **ADDR** must be either **rtacl::ipv4a** or
   **rtacl::ipv6a**. **rtacl::result<ADDR>** is a *typedef* of
-  **std::vector<rtacl::entry<ADDR>>**;
+  **std::vector<rtacl::entry<ADDR>>**.
 
 * **rtacl::db<ADDR>**: R-tree ACL class. Template parameter
   **ADDR** must be either **rtacl::ipv4a** or **rtacl::ipv6a**.
@@ -126,7 +129,7 @@ Makes the lower bound of an R-tree ACL entry
 * **da**: Destination IP address (IPv4 or IPv6 depending on **ADDR**)
 * **sp**: Source port number
 * **dp**: Destination port number
-* **proto**: IP Protocol (TCP, UDP, etc.)
+* **proto**: IP Protocol number (6 for TCP, 17 for UDP, etc.)
 * **dscp**: DSCP
 
 ##### Output Parameters
@@ -159,7 +162,7 @@ Makes the upper bound of an R-tree ACL entry
 * **da**: Destination IP address (IPv4 or IPv6 depending on **ADDR**)
 * **sp**: Source port number
 * **dp**: Destination port number
-* **proto**: IP Protocol (TCP, UDP, etc.)
+* **proto**: IP Protocol number (6 for TCP, 17 for UDP, etc.)
 * **dscp**: DSCP
 
 ##### Output Parameters
@@ -537,6 +540,386 @@ remove:    100us - 1000us:  0.00%  22
 remove:           >1ms:      ---   14
 
 ```
+
+## Sockaddr Interface
+
+**rtacl::db** has supporting classes using **sockaddr_in** and
+**sockaddr_in6** although it is not necessary to use them.
+
+## rtacl::sockItem<SADDR>
+
+ACL tuple using **sockaddr_in** or **sockaddr_in6**.
+
+### Template Parameters
+
+* **SADDR**: must be either **sockaddr_in** or
+  **sockaddr_in6**.
+
+
+### Member Functions
+
+```C++
+template <class SADDR>
+void rtacl::sockItem::set (SADDR& src,
+                           SADDR& dst,
+                           u8 proto,
+                           u8 dscp);
+```
+
+Sets the followings:
+  * source IP address and port (**sockaddr_in** or **sockaddr_in6**)
+  * destination IP address and port (**sockaddr_in** or **sockaddr_in6**)
+  * IP Protocol number (6 for TCP, 17 for UDP, etc.)
+  * DSCP
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+##### Input Parameters
+
+* **src**: Source IP address and port number
+* **dst**: Destination IP address andd port number
+* **proto**: IP Protocol number (6 for TCP, 17 for UDP, etc.)
+* **dscp**: DSCP
+
+
+```C++
+template <class SADDR>
+void rtacl::sockItem::setSrc (SADDR& src);
+```
+
+Sets source IP address and port number.
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+##### Input Parameters
+
+* **src**: Source IP address and port number
+
+
+```C++
+template <class SADDR>
+void rtacl::sockItem::setDst (SADDR& dst);
+```
+
+Sets destination IP address and port number.
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+##### Input Parameters
+
+* **dst**: Destination IP address and port number
+
+
+```C++
+template <class SADDR>
+void rtacl::sockItem::setProto (u8 proto);
+```
+
+Sets IP protocol number.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+##### Input Parameters
+
+* **proto**: IP Protocol number (6 for TCP, 17 for UDP, etc.)
+
+
+```C++
+template <class SADDR>
+void rtacl::sockItem::setDSCP (u8 dscp);
+```
+
+Sets DSCP value.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Input Parameters
+
+* **dscp**: DSCP
+
+
+```C++
+template <class SADDR>
+SADDR& rtacl::sockItem::getSrc ();
+```
+
+Returns the reference to the source **SADDR**
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **SADDR&**: Reference to the source **SADDR**
+
+
+```C++
+template <class SADDR>
+SADDR& rtacl::sockItem::getDst ();
+```
+
+Returns the reference to the destination **SADDR**
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **SADDR&**: Reference to the destination **SADDR**
+
+
+```C++
+template <class SADDR>
+void* rtacl::sockItem::getsa ();
+```
+
+Returns the pointer to the source **sin_addr** or **sin6_addr**
+depending on **SADDR**.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **void***: Pointer to the source **sin_addr** or **sin6_addr**
+
+
+```C++
+template <class SADDR>
+void* rtacl::sockItem::getda ();
+```
+
+Returns the pointer to the destination **sin_addr** or **sin6_addr**
+depending on **SADDR**.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **void***: Pointer to the destination **sin_addr** or **sin6_addr**
+
+
+```C++
+template <class SADDR>
+u16 rtacl::sockItem::getsp ();
+```
+
+Returns the source port number in the host byte order.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **u16**: Source port number in the host byte order
+
+
+```C++
+template <class SADDR>
+u16 rtacl::sockItem::getdp ();
+```
+
+Returns the destination port number in the host byte order.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **u16**: Destination port number in the host byte order
+
+
+```C++
+template <class SADDR>
+u8 rtacl::sockItem::getProto ();
+```
+
+Returns the IP Protocol number.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **u8**: IP Protocol number
+
+
+```C++
+template <class SADDR>
+u8 rtacl::sockItem::getDSCP ();
+```
+
+Returns the DSCP value.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **u8**: DSCP value
+
+
+```C++
+template <class SADDR>
+std::string rtacl::sockItem::str ();
+```
+
+Converts the 6 tuples into a string.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **std::string**: 6 tuples in the following format: sa, da, sp, dp, ipproto, dscp
+
+
+## rtacl::sockEnt<SADDR>
+
+ACL entry using **sockaddr_in** or **sockaddr_in6**.
+
+### Template Parameters
+
+* **SADDR**: must be either **sockaddr_in** or
+  **sockaddr_in6**.
+
+
+### Member Functions
+
+```C++
+template <class SADDR>
+rtal::sockEnt::set (sockItem<SADDR>& min, sockItem<SADDR>& max, u32 pri);
+```
+
+Sets the ACL entry from the input parameters.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Input Parameters
+
+* **min**: Lower bound of the ACL entry
+* **max**: Upper bound of the ACL entry
+
+
+```C++
+template <class SADDR>
+rtal::sockEnt::setMin (sockItem<SADDR>& min);
+```
+
+Sets the lower bound of the ACL entry.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Input Parameters
+
+* **min**: Lower bound of the ACL entry
+
+
+```C++
+template <class SADDR>
+rtal::sockEnt::setMax (sockItem<SADDR>& max);
+```
+
+Sets the upper bound of the ACL entry.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Input Parameters
+
+* **max**: Upper bound of the ACL entry
+
+
+```C++
+template <class SADDR>
+rtal::sockEnt::setPriority (u32 pri);
+```
+
+Sets ACL entry's priority as the tie breaker when multiple ACL
+entries are hit.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Input Parameters
+
+* **pri**: Priority (users can choose either larger number has
+  higher priority or lower number has higher priority.))
+
+
+```C++
+template <class SADDR>
+std::string rtacl::sockEnt::str ();
+```
+
+Converts an ACL entry into a string.
+
+
+##### Template Parameters
+
+* **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
+
+##### Return Value
+
+* **std::string**: SAmin-SAmax, DAmin-DAmax, SPmin-SPmax, DPmin-DPmax, PROTOmin-PROTOmax, DSCPmin-DSCPmax
+
 
 ## References
 
