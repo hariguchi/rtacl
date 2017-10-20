@@ -150,8 +150,8 @@ template <class ADDR> class sockEnt;
 template <class SADDR>
 class sockItem {
 private:
-    SADDR src;
-    SADDR dst;
+    SADDR src __aligned;
+    SADDR dst __aligned;
     sa_family_t af;           // copy of \e sin_family or \e sin6_family
     u16 ao;                   // offset to \e sin_addr' or \e sin6_addr
     u16 po;                   // offset to \e sin_port' or \e sin6_port
@@ -165,8 +165,8 @@ public:
         this->proto = proto;
         this->dscp  = dscp;
     };
-    void setSrcAddr (SADDR& src) { this->src = src; };
-    void setDstAddr (SADDR& dst) { this->dst = dst; };
+    void setSrc (SADDR& src) { this->src = src; };
+    void setDst (SADDR& dst) { this->dst = dst; };
     void setProto (u8 proto) { this->proto = proto; };
     void setDSCP (u8 dscp) { this->dscp = dscp; };
     SADDR& getSrc () { return src; };

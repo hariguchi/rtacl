@@ -107,6 +107,22 @@ enum {
     MEM_TBITMAP,
 };
 
+/*
+ * gcc specific macros
+ */
+#ifdef __GNUC__
+
+#define __aligned __attribute__ ((aligned))
+#define __nbytes_aligned(_n) __attribute__ ((aligned (_n))
+#define __packed __attribute__ (packed)
+
+#else /* __GNUC__ */
+
+#define __aligned
+#define __nbytes_aligned(_n)
+#define __packed
+
+#endif /* __GNUC__ */
 
 
 #define elementsOf(_array_)       (sizeof((_array_))/sizeof((_array_)[0]))
