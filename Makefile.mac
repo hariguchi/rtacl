@@ -1,0 +1,106 @@
+# Languages
+CC        = g++
+PERL      = perl
+COMPILE.c = $(CC) $(DEPFLAGS) $(CFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+COMPILE.cc  = $(CXX) $(DEPFLAGS) $(CXXFLAGS) $(CPPFLAGS) $(TARGET_ARCH) -c
+POSTCOMPILE = @mv -f $(DEPDIR)/$*.Td $(DEPDIR)/$*.d && touch $@
+
+
+# Directories
+OBJDIR := obj
+DEPDIR := dep
+BOOSTDIR := /usr/local/opt/boost@1.60
+
+
+# Flags
+DEPFLAGS = -MT $@ -MMD -MP -MF $(DEPDIR)/$*.Td
+OPTFLAGS  := -O0
+INCLUDEFLAGS := -I$(BOOSTDIR)/include -I../include
+PROFFLAGS := #-pg
+DEFS      += 
+CFLAGS    := -Wall -g $(PROFFLAGS) $(INCLUDEFLAGS) $(OPTFLAGS) $(DEFS)
+CXXFLAGS  := $(CFLAGS) -std=c++11
+LDFLAGS   := -L$(BOOSTDIR)/lib -L/usr/local/lib/gcc/6
+
+# Libraries
+LDLIBS    := -lboost_thread-mt \
+             -lboost_filesystem \
+             -lboost_regex \
+             -lboost_system \
+             -lboost_date_time \
+             -lboost_chrono
+LOADLIBES := 
+
+
+# Target names
+UTESTTARGET := unitTest
+PTESTTARGET := perfTest
+TARGET    :=
+LIBTARGET := 
+
+# Source files
+LIBSRCS   := 
+UTESTSRCS := unitTest.cpp
+PTESTSRCS := perfTest.cpp
+SRCS      := $(UTESTSRCS) $(PTESTSRCS)
+
+# Object files
+LIBOBJS   := $(addprefix $(OBJDIR)/,$(LIBSRCS:.cpp=.o))
+UTESTOBJS := $(addprefix $(OBJDIR)/,$(UTESTSRCS:.cpp=.o))
+PTESTOBJS  := $(addprefix $(OBJDIR)/,$(PTESTSRCS:.cpp=.o))
+OBJS      := $(PTESTOBJS) $(UTESTOBJS)
+
+
+$(UTESTTARGET): $(UTESTOBJS) $(LIBTARGET)
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) $(PROF) -o $@
+
+$(PTESTTARGET): $(PTESTOBJS) $(LIBTARGET)
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) $(PROF) -o $@
+
+$(TARGET): $(OBJS) $(LIBTARGET)
+	$(LINK.o) $^ $(LOADLIBES) $(LDLIBS) $(PROF) -o $@
+
+$(LIBTARGET): $(LIBOBJS)
+	$(AR) $(ARFLAGS) $@ $^
+	ranlib $@
+
+.PHONY: perf
+perf:
+	$(MAKE) -f $(lastword $(MAKEFILE_LIST)) perfTest \
+	OPTFLAGS=-O3 DEFS=-DNODEBUG
+
+.PHONY: clean
+clean:
+	rm -f $(TARGET) $(UTESTTARGET) $(PTESTTARGET) \
+	$(TARGET).exe $(UTESTTARGET).exe $(PTESTTARGET).exe \
+	$(LIBTARGET) $(OBJS) $(LIBOBJS) $(DEPDIR)/*.d *.bak *.exe.* *~
+
+
+$(OBJDIR)/%.o : %.c
+$(OBJDIR)/%.o : %.c $(DEPDIR)/%.d
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
+	$(POSTCOMPILE)
+
+$(OBJDIR)/%.o : %.cpp
+$(OBJDIR)/%.o : %.cpp $(DEPDIR)/%.d
+	$(COMPILE.cc) $(OUTPUT_OPTION) $<
+	$(POSTCOMPILE)
+
+$(OBJDIR)/%.o : %.cc
+$(OBJDIR)/%.o : %.cc $(DEPDIR)/%.d
+	$(COMPILE.cc) $(OUTPUT_OPTION) $<
+	$(POSTCOMPILE)
+
+$(OBJDIR)/%.o : %.cxx
+$(OBJDIR)/%.o : %.cxx $(DEPDIR)/%.d
+	$(COMPILE.cc) $(OUTPUT_OPTION) $<
+	$(POSTCOMPILE)
+
+%.i : %.c
+	$(CC) -E $(CPPFLAGS) $<
+
+$(DEPDIR)/%.d: ;
+.PRECIOUS: $(DEPDIR)/%.d
+
+# Include dependency files
+include $(wildcard $(patsubst %,$(DEPDIR)/%.d,$(basename $(SRCS))))
