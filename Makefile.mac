@@ -1,3 +1,5 @@
+# -*- Makefile -*-
+
 # Languages
 CC        = g++
 PERL      = perl
