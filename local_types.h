@@ -113,7 +113,7 @@ enum {
 #ifdef __GNUC__
 
 #ifndef __aligned
-#define __aligned(_x) __attribute__ ((__aligned__(x)))
+#define __aligned(_x) __attribute__ ((__aligned__(_x)))
 #endif /* __aligned */
 
 #ifndef __packed
