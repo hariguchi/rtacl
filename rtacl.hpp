@@ -150,8 +150,8 @@ template <class ADDR> class sockEnt;
 template <class SADDR>
 class sockItem {
 private:
-    SADDR src __aligned;
-    SADDR dst __aligned;
+    SADDR src __aligned();
+    SADDR dst __aligned();
     sa_family_t af;           // copy of \e sin_family or \e sin6_family
     u16 ao;                   // offset to \e sin_addr' or \e sin6_addr
     u16 po;                   // offset to \e sin_port' or \e sin6_port
