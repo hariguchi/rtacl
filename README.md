@@ -18,6 +18,7 @@ matching.
 * *local_types.h* must be stored in the include path as well as
   *rtacl.hpp*
 
+
 ## Performance
 
 * CPU: Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz
@@ -98,10 +99,12 @@ entries (ascendant.)
 
 ## rtacl::db<ADDR>
 
+
 ### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
+
 
 ### Member Functions
 
@@ -118,10 +121,12 @@ void rtacl::db::makeMin(const ADDR sa,
 
 Makes the lower bound of an R-tree ACL entry
 
+
 ##### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
+
 
 ##### Input Parameters
 
@@ -131,6 +136,7 @@ Makes the lower bound of an R-tree ACL entry
 * **dp**: Destination port number
 * **proto**: IP Protocol number (6 for TCP, 17 for UDP, etc.)
 * **dscp**: DSCP
+
 
 ##### Output Parameters
 
@@ -151,10 +157,12 @@ void rtacl::db::makeMax(const ADDR sa,
 
 Makes the upper bound of an R-tree ACL entry
 
+
 ##### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
+
 
 ##### Input Parameters
 
@@ -178,10 +186,12 @@ void rtacl::db::insert(entry<ADDR> const& ent);
 
 Inserts a copy of **ent** into **db::rtree**.
 
+
 ##### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
+
 
 ##### Input Parameters
 
@@ -195,10 +205,12 @@ void rtacl::db::remove(entry<ADDR> const& ent);
 
 Removes the R-tree entry matching **ent** from **db::rtree**.
 
+
 ##### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
+
 
 ##### Input Parameters
 
@@ -212,14 +224,17 @@ rtacl::result<ADDR> rtacl::db::find(const tuple<ADDR>& key);
 
 Finds R-tree ACL entries matching **key**.
 
+
 ##### Template Parameters
 
 * **ADDR**: must be either **rtacl::ipv4a** (**s64**) or
   **rtacl::ipv6a** (**boost::multiprecision::int256_t**.)
 
+
 ##### Input Parameters
 
 * **key**: Reference to the R-tree ACL tuple to be looked up.
+
 
 ##### Return Value
 
@@ -230,6 +245,7 @@ Vector of the matched R-tree ACL entries.
 template <class ADDR>
 rtacl::result<ADDR> rtacl::db::dump();
 ```
+
 
 ##### Return Value
 
@@ -410,23 +426,28 @@ v4rawTest ()
 }
 ```
 
+
 ## Performance Details
 
 * CPU: Intel(R) Core(TM) i3-4160T CPU @ 3.10GHz (cache size: 3072 KB)
 * Memory: 4GB
 * Compiler options: -O3 -DNDEBUG
 
+
 ### Search (matching)
 
 830ns/search with 1 million IPv4 ACL entries.
+
 
 ### Search (un-matching)
 
 780ns/search with 1 million IPv4 ACL entries.
 
+
 ### Insertion
 
 3.27 us/insertion in average while inserting 1 million IPv4 ACL entries.
+
 
 ### Deletion
 
@@ -541,14 +562,18 @@ remove:           >1ms:      ---   14
 
 ```
 
+
 ## Sockaddr Interface
 
-**rtacl::db** has supporting classes using **sockaddr_in** and
-**sockaddr_in6** although it is not necessary to use them.
+*rtacl.h* has supporting classes using **sockaddr_in** and
+**sockaddr_in6** for **rtacl::db** although it is not necessary
+to use them.
+
 
 ## rtacl::sockItem<SADDR>
 
 ACL tuple using **sockaddr_in** or **sockaddr_in6**.
+
 
 ### Template Parameters
 
@@ -577,6 +602,7 @@ Sets the followings:
 
 * **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
 
+
 ##### Input Parameters
 
 * **src**: Source IP address and port number
@@ -592,9 +618,11 @@ void rtacl::sockItem::setSrc (SADDR& src);
 
 Sets source IP address and port number.
 
+
 ##### Template Parameters
 
 * **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
 
 ##### Input Parameters
 
@@ -608,9 +636,11 @@ void rtacl::sockItem::setDst (SADDR& dst);
 
 Sets destination IP address and port number.
 
+
 ##### Template Parameters
 
 * **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
 
 ##### Input Parameters
 
@@ -628,6 +658,7 @@ Sets IP protocol number.
 ##### Template Parameters
 
 * **SADDR** must be either **sockaddr_in** or **sockaddr_in6**.
+
 
 ##### Input Parameters
 
@@ -803,7 +834,7 @@ template <class SADDR>
 std::string rtacl::sockItem::str ();
 ```
 
-Converts the 6 tuples into a string.
+Converts the 6-tuple into a string.
 
 
 ##### Template Parameters
@@ -813,12 +844,13 @@ Converts the 6 tuples into a string.
 
 ##### Return Value
 
-* **std::string**: 6 tuples in the following format: sa, da, sp, dp, ipproto, dscp
+* **std::string**: 6-tuple in the following format: sa, da, sp, dp, ipproto, dscp
 
 
 ## rtacl::sockEnt<SADDR>
 
 ACL entry using **sockaddr_in** or **sockaddr_in6**.
+
 
 ### Template Parameters
 
@@ -919,6 +951,179 @@ Converts an ACL entry into a string.
 ##### Return Value
 
 * **std::string**: SAmin-SAmax, DAmin-DAmax, SPmin-SPmax, DPmin-DPmax, PROTOmin-PROTOmax, DSCPmin-DSCPmax
+
+
+## Supporting Functions
+
+
+```C++
+inline std::string
+ipv4a2s (const rtacl::ipv4a a);
+```
+
+Converts IPv4 address (in **rtacl::ipv4a**) to a string.
+
+
+### Input Parameters
+
+* **a**: IPv4 address
+
+
+### Return Value
+
+* **std::string**: IPv4 address string (e.g., "1.2.3.4")
+
+
+```C++
+inline std::string
+ipv6a2s (const rtacl::ipv6a& a);
+```
+
+Converts IPv6 address (in **rtacl::ipv6a**) to a string.
+
+
+### Input Parameters
+
+* **a**: Reference to an IPv6 address (in **rtacl::ipv6a**)
+
+
+### Return Value
+
+* **std::string**: IPv6 address string (e.g., "2001:0:0:1::1")
+
+
+```C++
+template <class INT>
+inline INT
+sin6a2int (const sockaddr_in6& sin6);
+```
+
+Converts IPv6 address (in **sockaddr_in6**) to either **ipv6a**
+(**u128**) or **rtacl::ipv6a** (**s256) (host byte order)
+
+
+### Template Parameters
+
+* **INT**: Must be either **ipv6a** (**u128**) or **rtacl::ipv6a** (**s256)
+
+
+### Input Parameters
+
+* **sin6**: Reference to an IPv6 address (in **sockaddr_in6**)
+
+
+### Return Value
+
+* **INT**: IPv6 address in the host byte order
+
+
+```C++
+template <class INT>
+inline sockaddr_in6
+int2sin6 (const INT& addr);
+```
+
+Converts IPv6 address (in either **ipv6a** (**u128**) or
+**rtacl::ipv6a** (**s256) (host byte order)) to **sockaddr_in6**.
+
+
+### Template Parameters
+
+* **INT**: Must be either **ipv6a** (**u128**) or **rtacl::ipv6a** (**s256**)
+
+
+### Input Parameters
+
+* **addr**: Reference to an IPv6 address in **INT**
+
+
+### Return Value
+
+* **sockaddr_in6**: IPv6 address in the network byte order
+
+
+```C++
+inline std::string
+tuple2str (const rtacl::tuple<ipv4a>& t);
+```
+
+Converts IPv4 6-tuple to a string.
+
+
+### Input Parameters
+
+* **t**: Reference to an Ipv4 6-tuple
+
+
+### Return Value
+
+* **std::string**: Source Ipv4 address, destination Ipv4
+                   address, source port number, destination
+                   port number, IP Protocol number, DSCP
+                   (e.g., "1.2.3.4, 5.6.7.8, 12345, 80, 6, 0")
+
+
+```C++
+inline std::string
+tuple2str (const rtacl::tuple<ipv6a>& t);
+```
+
+Converts IPv6 6-tuple to a string.
+
+
+### Input Parameters
+
+* **t**: Reference to an IPv6 6-tuple
+
+
+### Return Value
+
+* **std::string**: Source IPv6 address, destination IPv6
+                   address, source port number, destination
+                   port number, IP Protocol number, DSCP
+                   (e.g., "2001:0:0:1::1, 2001:0:0:2::1, 12345, 80, 6, 0")
+
+
+```C++
+inline std::string
+range2str (const rtacl::range<ipv4a>& r);
+```
+
+Converts IPv4 6-tuple range to a string.
+
+
+### Input Parameters
+
+* **r**: Reference to an Ipv4 6-tuple range
+
+
+### Return Value
+
+* **std::string**: Source Ipv4 address range, destination Ipv4
+                   range, source port range, destination
+                   port range, IP Protocol range, DSCP range
+                   (e.g., "1.2.3.4-1.2.3.10, 5.6.7.8-5.6.7.15, 12345-23456, 80-80, 6-6, 0-255")
+
+
+```C++
+inline std::string
+range2str (const rtacl::range<ipv6a>& r);
+```
+
+Converts IPv6 6 tuple range to a string.
+
+
+### Input Parameters
+
+* **r**: Reference to a range Ipv6 6 range
+
+
+### Return Value
+
+* **std::string**: Source Ipv6 address range, destination Ipv6
+                   range, source port range, destination
+                   port range, IP Protocol range, DSCP range
+                   (e.g., "2001:0:0:1::1-2001:0:0:1::ffff, 2001:0:0:2::1-2001:0:0:2::ffff, 12345-23456, 80-80, 6-6, 0-255")
 
 
 ## References
