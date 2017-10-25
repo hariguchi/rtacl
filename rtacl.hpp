@@ -390,7 +390,7 @@ ipv6a2s (const rtacl::ipv6a& a)
  * @brief Converts \e sockaddr_in6 to \e INT
  *
  * @param INT Must be either \e ipv6a (\e u128) or
- *            \e rtacl::ipv6a (\e u256)
+ *            \e rtacl::ipv6a (\e s256)
  *
  * @param[in] a IPv6 address as \e sockaddr_in6
  *
